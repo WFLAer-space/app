@@ -1,0 +1,42 @@
+{
+  "name": "modular-website",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "moduleResolution": "node",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "clean": "node -e \"fs.rmSync('dist', { recursive: true, force: true })\"",
+    "cache:clean": "node -e \"fs.rmSync('node_modules/.cache', { recursive: true, force: true })\""
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0",
+    "@heroicons/react": "^2.1.1",
+    "react-window": "^1.8.9",
+    "react-lazy-load-image-component": "^1.6.0",
+    "react-query": "^3.39.0",
+    "lodash-es": "^4.17.21",
+    "lru-cache": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.1.0",
+    "rollup-plugin-visualizer": "^5.12.0",
+    "vite-plugin-compression": "^0.5.1",
+    "@rollup/plugin-replace": "^5.0.5",
+    "del": "^7.1.0"
+  },
+  "overrides": {
+    "glob": "^10.3.10",
+    "rimraf": "^5.0.5"
+  }
+} 
