@@ -1,92 +1,70 @@
-import { registerPage, createPageLayout } from '../api/pageRegistry.jsx';
-import { defaultPageStyles } from '../config/pageStyles';
+import { memo } from 'react';
+import { useApp } from '../context/AppContext';
+import { THEME_CONFIG, TRANSITION_CLASSES, combineStyles } from '../config/theme';
 
-function DashboardPage() {
-  const config = {
-    title: 'Dashboard',
-    path: '/dashboard',
-    layout: {
-      header: {
-        title: 'Dashboard Overview',
-        description: 'Monitor your key metrics and performance indicators',
-        actions: (
-          <>
-            <button className={defaultPageStyles.components.button.secondary}>
-              Export Data
-            </button>
-            <button className={defaultPageStyles.components.button.primary}>
-              Add Widget
-            </button>
-          </>
-        ),
-      },
-    },
-  };
+const DashboardPage = memo(() => {
+  const { theme } = useApp();
+  const styles = THEME_CONFIG[theme];
 
-  return createPageLayout({
-    config,
-    children: (
-      <div className="space-y-6">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className={defaultPageStyles.components.card}>
-            <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium">
-              Total Views
-            </h3>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white mt-2">
-              1,234
-            </p>
-          </div>
-          
-          <div className={defaultPageStyles.components.card}>
-            <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium">
-              Active Users
-            </h3>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white mt-2">
-              123
-            </p>
-          </div>
-          
-          <div className={defaultPageStyles.components.card}>
-            <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium">
-              Total Pages
-            </h3>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white mt-2">
-              15
-            </p>
-          </div>
+  return (
+    <div className={combineStyles(
+      'p-6 rounded-lg border',
+      styles.card.background,
+      styles.text,
+      styles.border,
+      TRANSITION_CLASSES
+    )}>
+      <h2 className={combineStyles('text-2xl font-bold mb-6', styles.text)}>
+        Dashboard
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Statistics Cards */}
+        <div className={combineStyles(
+          'p-6 rounded-lg border',
+          styles.card.background,
+          styles.border,
+          TRANSITION_CLASSES
+        )}>
+          <h3 className={combineStyles('text-lg font-semibold mb-2', styles.text)}>
+            Total Views
+          </h3>
+          <p className={combineStyles('text-3xl font-bold', styles.text)}>
+            1,234
+          </p>
         </div>
-
-        {/* Recent Activity */}
-        <div className={defaultPageStyles.components.card}>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-            Recent Activity
-          </h2>
-          <div className="space-y-4">
-            {[1, 2, 3].map((item) => (
-              <div key={item} className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span className="text-gray-600 dark:text-gray-400">
-                    New user registration
-                  </span>
-                </div>
-                <span className="text-sm text-gray-500 dark:text-gray-500">
-                  2 min ago
-                </span>
-              </div>
-            ))}
-          </div>
+        
+        <div className={combineStyles(
+          'p-6 rounded-lg border',
+          styles.card.background,
+          styles.border,
+          TRANSITION_CLASSES
+        )}>
+          <h3 className={combineStyles('text-lg font-semibold mb-2', styles.text)}>
+            Active Users
+          </h3>
+          <p className={combineStyles('text-3xl font-bold', styles.text)}>
+            567
+          </p>
+        </div>
+        
+        <div className={combineStyles(
+          'p-6 rounded-lg border',
+          styles.card.background,
+          styles.border,
+          TRANSITION_CLASSES
+        )}>
+          <h3 className={combineStyles('text-lg font-semibold mb-2', styles.text)}>
+            Total Links
+          </h3>
+          <p className={combineStyles('text-3xl font-bold', styles.text)}>
+            89
+          </p>
         </div>
       </div>
-    ),
-  });
-}
-
-export const DashboardPageRegistration = registerPage({
-  title: 'Dashboard',
-  path: '/dashboard',
-  component: DashboardPage,
+    </div>
+  );
 });
+
+DashboardPage.displayName = 'DashboardPage';
 
 export default DashboardPage; 

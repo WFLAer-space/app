@@ -7,6 +7,17 @@ export function ThemeProvider({ children }) {
     const saved = localStorage.getItem('theme');
     return saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
   });
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const handleThemeChange = (newIsDark) => {
+    setIsTransitioning(true);
+    setIsDark(newIsDark);
+    
+    // Reset transition state after animation completes
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 300); // Match this with your CSS transition duration
+  };
 
   useEffect(() => {
     if (isDark) {
@@ -19,7 +30,7 @@ export function ThemeProvider({ children }) {
   }, [isDark]);
 
   return (
-    <ThemeContext.Provider value={{ isDark, setIsDark }}>
+    <ThemeContext.Provider value={{ isDark, setIsDark: handleThemeChange, isTransitioning }}>
       {children}
     </ThemeContext.Provider>
   );

@@ -47,10 +47,10 @@ export function createPageLayout({ children, config }) {
   };
 
   return (
-    <div className={`${paddingClasses[spacing]}`}>
+    <div className={`h-full flex flex-col ${paddingClasses[spacing]}`}>
       {/* Page Header */}
       {config.layout.header && (
-        <div className="mb-6">
+        <div className="flex-shrink-0 mb-6">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             {config.layout.header.title}
           </h1>
@@ -69,7 +69,8 @@ export function createPageLayout({ children, config }) {
 
       {/* Page Content */}
       <div className={`
-        mx-auto
+        flex-1
+        mx-auto w-full
         ${maxWidth === 'full' ? '' : `max-w-${maxWidth}`}
       `}>
         {children}

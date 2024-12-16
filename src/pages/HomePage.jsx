@@ -1,75 +1,67 @@
-import { registerPage, createPageLayout } from '../api/pageRegistry.jsx';
-import { defaultPageStyles } from '../config/pageStyles';
+import { memo } from 'react';
+import { useApp } from '../context/AppContext';
+import { THEME_CONFIG, TRANSITION_CLASSES, combineStyles } from '../config/theme';
+import { CardPage } from '../components/common/BasePage';
 
-function HomePage() {
-  const config = {
-    title: 'Home',
-    path: '/',
-    layout: {
-      header: {
-        title: 'Welcome to Our Platform',
-        description: 'A modern, modular React application with dynamic page registration',
-        actions: (
-          <button className={defaultPageStyles.components.button.primary}>
-            Get Started
-          </button>
-        ),
-      },
+const FeatureCard = memo(({ title, description }) => {
+  const { theme } = useApp();
+  const styles = THEME_CONFIG[theme];
+
+  return (
+    <div className={combineStyles(
+      styles.card.background,
+      styles.card.hover,
+      'p-4 rounded-lg',
+      TRANSITION_CLASSES
+    )}>
+      <h3 className={combineStyles('text-lg font-semibold mb-2', styles.text)}>
+        {title}
+      </h3>
+      <p className={styles.textSecondary}>
+        {description}
+      </p>
+    </div>
+  );
+});
+
+FeatureCard.displayName = 'FeatureCard';
+
+const HomePage = memo(() => {
+  const features = [
+    {
+      title: '快速链接',
+      description: '访问您常用的资源和工具。'
     },
-  };
+    {
+      title: '仪表盘',
+      description: '查看您的个性化仪表盘，包含关键指标和更新。'
+    },
+    {
+      title: '关于',
+      description: '了解更多关于平台和其功能的信息。'
+    }
+  ];
 
-  return createPageLayout({
-    config,
-    children: (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className={defaultPageStyles.components.card}>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-            Easy Navigation
-          </h2>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Use the sidebar to navigate between different pages of the application.
-            Fully responsive and mobile-friendly design.
-          </p>
-        </div>
-        
-        <div className={defaultPageStyles.components.card}>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-            Dark Mode Support
-          </h2>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Toggle between light and dark themes with our built-in theme switcher.
-            Your preference is saved automatically.
-          </p>
-        </div>
-
-        <div className={defaultPageStyles.components.card}>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-            Modular Design
-          </h2>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Add new pages easily using our page registration system.
-            Consistent styling across all pages.
-          </p>
-        </div>
-
-        <div className={defaultPageStyles.components.card}>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-            Modern Stack
-          </h2>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Built with React, Tailwind CSS, and modern best practices.
-            Fast development with Vite.
-          </p>
+  return (
+    <CardPage title="欢迎使用 WFLAer">
+      <div className="space-y-4">
+        <p className="text-lg">
+          这是您的个人仪表盘，用于管理和组织您的数字生活。
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {features.map((feature, index) => (
+            <FeatureCard
+              key={index}
+              title={feature.title}
+              description={feature.description}
+            />
+          ))}
         </div>
       </div>
-    ),
-  });
-}
-
-export const HomePageRegistration = registerPage({
-  title: 'Home',
-  path: '/',
-  component: HomePage,
+    </CardPage>
+  );
 });
+
+HomePage.displayName = 'HomePage';
 
 export default HomePage; 
